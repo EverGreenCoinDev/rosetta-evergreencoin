@@ -196,10 +196,10 @@ End of functions from https://github.com/client9/shlib
 ------------------------------------------------------------------------
 EOF
 
-BINARY=rosetta-bitcoin
+BINARY=rosetta-evergreencoin
 FORMAT=tar.gz
-OWNER=coinbase
-REPO="rosetta-bitcoin"
+OWNER=evergreencoindev
+REPO="rosetta-evergreencoin"
 PREFIX="$OWNER/$REPO"
 
 # use in logging routines
