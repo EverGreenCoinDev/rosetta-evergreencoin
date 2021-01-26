@@ -44,8 +44,8 @@ execute() {
   log_info "downloading image into ${tmpdir}"
   http_download "${tmpdir}/${TARBALL}" "${TARBALL_URL}" "" "1"
   docker load --input "${tmpdir}/${TARBALL}"
-  docker tag "rosetta-bitcoin:${TAG}" "rosetta-bitcoin:latest"
-  log_info "loaded rosetta-bitcoin:${TAG} and tagged as rosetta-bitcoin:latest"
+  docker tag "rosetta-evergreencoin:${TAG}" "rosetta-evergreencoin:latest"
+  log_info "loaded rosetta-evergreencoin:${TAG} and tagged as rosetta-evergreencoin:latest"
   rm -rf "${tmpdir}"
   log_info "removed temporary directory ${tmpdir}"
 }
