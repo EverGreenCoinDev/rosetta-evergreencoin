@@ -23,9 +23,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/coinbase/rosetta-bitcoin/bitcoin"
-	"github.com/coinbase/rosetta-bitcoin/configuration"
-	mocks "github.com/coinbase/rosetta-bitcoin/mocks/indexer"
+	"github.com/evergreencoindev/rosetta-evergreencoin/evergreencoin"
+	"github.com/evergreencoindev/rosetta-evergreencoin/configuration"
+	mocks "github.com/evergreencoindev/rosetta-evergreencoin/mocks/indexer"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/coinbase/rosetta-sdk-go/utils"

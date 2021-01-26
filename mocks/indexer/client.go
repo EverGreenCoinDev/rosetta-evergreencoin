@@ -5,7 +5,7 @@ package indexer
 import (
 	context "context"
 
-	bitcoin "github.com/coinbase/rosetta-bitcoin/bitcoin"
+	evergreencoin "github.com/evergreencoindev/rosetta-evergreencoin/evergreencoin"
 
 	mock "github.com/stretchr/testify/mock"
 

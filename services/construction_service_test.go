@@ -19,9 +19,9 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/coinbase/rosetta-bitcoin/bitcoin"
-	"github.com/coinbase/rosetta-bitcoin/configuration"
-	mocks "github.com/coinbase/rosetta-bitcoin/mocks/services"
+	"github.com/evergreencoindev/rosetta-evergreencoin/evergreencoin"
+	"github.com/evergreencoindev/rosetta-evergreencoin/configuration"
+	mocks "github.com/evergreencoindev/rosetta-evergreencoin/mocks/services"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/stretchr/testify/assert"

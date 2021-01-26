@@ -1,6 +1,6 @@
 {
  "network": {
-  "blockchain": "Bitcoin",
+  "blockchain": "EverGreenCoin",
   "network": "Mainnet"
  },
  "online_url": "http://localhost:8080",

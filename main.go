@@ -24,11 +24,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/coinbase/rosetta-bitcoin/bitcoin"
-	"github.com/coinbase/rosetta-bitcoin/configuration"
-	"github.com/coinbase/rosetta-bitcoin/indexer"
-	"github.com/coinbase/rosetta-bitcoin/services"
-	"github.com/coinbase/rosetta-bitcoin/utils"
+	"github.com/evergreencoindev/rosetta-evergreencoin/bitcoin"
+	"github.com/evergreencoindev/rosetta-evergreencoin/configuration"
+	"github.com/evergreencoindev/rosetta-evergreencoin/indexer"
+	"github.com/evergreencoindev/rosetta-evergreencoin/services"
+	"github.com/evergreencoindev/rosetta-evergreencoin/utils"
 
 	"github.com/coinbase/rosetta-sdk-go/asserter"
 	"github.com/coinbase/rosetta-sdk-go/server"
