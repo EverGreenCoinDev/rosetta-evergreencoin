@@ -1,92 +1,26 @@
-# Copyright 2020 Coinbase, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#Docker EverGreenCoin daemon RC-1
+#Stage 1 The daemon builder
+FROM ubuntu:18.04 AS builder
+WORKDIR /home/root
+RUN ["apt", "update"]
+RUN ["apt", "install", "git", "-y"]
+#Get the Stage 1 Builder script that builds the daemon
+RUN ["git", "clone", "https://gist.github.com/xbrooks/44e375d582ffd4c1b7d7dbf61ad39435"]
+RUN ["chmod", "+x", "44e375d582ffd4c1b7d7dbf61ad39435/build-install-daemons.sh"]
+RUN ["44e375d582ffd4c1b7d7dbf61ad39435/build-install-daemons.sh", "egc", "https://github.com/evergreencoindev/evergreencoin", "evergreencoind", "evergreencoin"]
 
-# Build bitcoind
-FROM ubuntu:18.04 as bitcoind-builder
+#Get the Stage 2 Configurator script here so the next stage doesn't need git
+RUN ["git", "clone", "https://gist.github.com/xbrooks/f142b7ed83d8b0adab9b27d71145b94c"]
+#Also get the Container Runtime Configurator that generates wallet and writes the conf
+RUN ["git", "clone", "https://gist.github.com/xbrooks/05392718769be46086514f839e57c137"]
+RUN ["chmod", "+x", "/home/root/f142b7ed83d8b0adab9b27d71145b94c/egc-docker-configure.sh", "/home/root/05392718769be46086514f839e57c137/run-egc.sh"]
 
-RUN mkdir -p /app \
-  && chown -R nobody:nogroup /app
-WORKDIR /app
-
-# Source: https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md#ubuntu--debian
-RUN apt-get update && apt-get install -y make gcc g++ autoconf autotools-dev bsdmainutils build-essential git libboost-all-dev \
-  libcurl4-openssl-dev libdb++-dev libevent-dev libssl-dev libtool pkg-config python python-pip libzmq3-dev wget
-
-# VERSION: Bitcoin Core 0.20.1
-RUN git clone https://github.com/bitcoin/bitcoin \
-  && cd bitcoin \
-  && git checkout 7ff64311bee570874c4f0dfa18f518552188df08
-
-RUN cd bitcoin \
-  && ./autogen.sh \
-  && ./configure --disable-tests --without-miniupnpc --without-gui --with-incompatible-bdb --disable-hardening --disable-zmq --disable-bench --disable-wallet \
-  && make
-
-RUN mv bitcoin/src/bitcoind /app/bitcoind \
-  && rm -rf bitcoin
-
-# Build Rosetta Server Components
-FROM ubuntu:18.04 as rosetta-builder
-
-RUN mkdir -p /app \
-  && chown -R nobody:nogroup /app
-WORKDIR /app
-
-RUN apt-get update && apt-get install -y curl make gcc g++
-ENV GOLANG_VERSION 1.15.5
-ENV GOLANG_DOWNLOAD_SHA256 9a58494e8da722c3aef248c9227b0e9c528c7318309827780f16220998180a0d
-ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
-
-RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
-  && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
-  && tar -C /usr/local -xzf golang.tar.gz \
-  && rm golang.tar.gz
-
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-
-# Use native remote build context to build in any directory
-COPY . src 
-RUN cd src \
-  && go build \
-  && cd .. \
-  && mv src/rosetta-bitcoin /app/rosetta-bitcoin \
-  && mv src/assets/* /app \
-  && rm -rf src 
-
-## Build Final Image
+#Stage 2. Just Ubuntu and the daemon (and its runtime deps)
 FROM ubuntu:18.04
+COPY --from=builder /home/egc/evergreencoind /home/root/f142b7ed83d8b0adab9b27d71145b94c/egc-docker-configure.sh /home/root/05392718769be46086514f839e57c137/run-egc.sh /home/root/
+RUN ["/home/root/egc-docker-configure.sh"]
+#P2P port: 5757 (testnet 15757)
+#RPC port: 5758 (testnet 15758)
+EXPOSE 5757/tcp 5758/tcp
 
-RUN apt-get update && \
-  apt-get install --no-install-recommends -y libevent-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev && \
-  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN mkdir -p /app \
-  && chown -R nobody:nogroup /app \
-  && mkdir -p /data \
-  && chown -R nobody:nogroup /data
-
-WORKDIR /app
-
-# Copy binary from bitcoind-builder
-COPY --from=bitcoind-builder /app/bitcoind /app/bitcoind
-
-# Copy binary from rosetta-builder
-COPY --from=rosetta-builder /app/* /app/
-
-# Set permissions for everything added to /app
-RUN chmod -R 755 /app/*
-
-CMD ["/app/rosetta-bitcoin"]
+CMD ["/usr/local/bin/run-egc.sh", "egc", "evergreencoind", "evergreencoin"]
