@@ -7,8 +7,6 @@
    Rosetta EverGreenCoin
 </h3>
 <p align="center">
-  <a href="https://circleci.com/gh/evergreencoindev/rosetta-evergreencoin/tree/master"><img src="https://circleci.com/gh/evergreencoindev/rosetta-evergreencoin/tree/master.svg?style=shield" /></a>
-  <a href="https://coveralls.io/github/evergreencoindev/rosetta-evergreencoin"><img src="https://coveralls.io/repos/github/evergreencoindev/rosetta-evergreencoin/badge.svg" /></a>
   <a href="https://goreportcard.com/report/github.com/evergreencoindev/rosetta-evergreencoin"><img src="https://goreportcard.com/badge/github.com/evergreencoindev/rosetta-evergreencoin" /></a>
   <a href="https://github.com/evergreencoindev/rosetta-evergreencoin/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/evergreencoindev/rosetta-evergreencoin.svg" /></a>
   <a href="https://pkg.go.dev/github.com/evergreencoindev/rosetta-evergreencoin?tab=overview"><img src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=shield" /></a>
