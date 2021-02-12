@@ -58,7 +58,7 @@ at port `8080`.
 
 #### Mainnet:Online
 ```text
-docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/evergreencoin-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 5758:5758 rosetta-evergreencoin:latest
+docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/evergreencoin-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 5757:5757 rosetta-evergreencoin:latest
 ```
 _If you cloned the repository, you can run `make run-mainnet-online`._
 
@@ -70,7 +70,7 @@ _If you cloned the repository, you can run `make run-mainnet-offline`._
 
 #### Testnet:Online
 ```text
-docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/evergreencoin-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 15758:15758 rosetta-evergreencoin:latest
+docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/evergreencoin-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 15757:15757 rosetta-evergreencoin:latest
 ```
 _If you cloned the repository, you can run `make run-testnet-online`._
 
