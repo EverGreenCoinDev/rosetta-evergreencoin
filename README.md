@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.rosetta-api.org">
-    <img width="90%" alt="Rosetta" src="https://www.rosetta-api.org/img/rosetta_header.png">
+    <img width="90%" alt="Rosetta" src="https://evergreencoin.org/wp-content/uploads/2021/02/rosettaEGC.png">
   </a>
 </p>
 <h3 align="center">
